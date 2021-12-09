@@ -24,10 +24,7 @@
 		if(species && species.has_organ["heart"])
 			var/datum/internal_organ/heart/heart = internal_organs_by_name["heart"]
 
-			if(!heart)
-				heart_multi *= 0.5 //you'd die in seconds but you can't remove internal organs even with varediting.
-
-			if(!(reagents.get_reagent_amount(/datum/reagent/medicine/peridaxon) >= 0.05) && heart.damage > 1)
+			if(heart && !(reagents.get_reagent_amount(/datum/reagent/medicine/peridaxon) >= 0.05) && heart.damage > 1)
 				if(heart.damage < heart.min_bruised_damage)
 					heart_multi = 0.9
 					blood_volume = max(blood_volume - 0.1, 0) //nulls regeneration
@@ -39,7 +36,9 @@
 					blood_volume = max(blood_volume - 1.3, 0)
 			else
 				heart_multi = 1
-
+			
+			if(!heart)
+				heart_multi *= 0.5 //you'd die in seconds but you can't remove internal organs even with varediting.
 
 
 
